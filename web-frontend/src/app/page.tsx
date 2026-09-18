@@ -106,13 +106,14 @@ function PlusIcon() {
 }
 
 export default function HomePage() {
-  const [file, setFile] = useState(null);
-  const [stage, setStage] = useState("upload"); // 'upload' | 'processing' | 'result'
-  const [results, setResults] = useState(null);
-  const [telemetry, setTelemetry] = useState([]);
-  const [error, setError] = useState(null);
-  const [navScrolled, setNavScrolled] = useState(false);
-  const [openFaq, setOpenFaq] = useState(0);
+  // Added TypeScript generics here to fix the "never" type errors
+  const [file, setFile] = useState<File | null>(null);
+  const [stage, setStage] = useState<string>("upload"); 
+  const [results, setResults] = useState<any>(null);
+  const [telemetry, setTelemetry] = useState<string[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [navScrolled, setNavScrolled] = useState<boolean>(false);
+  const [openFaq, setOpenFaq] = useState<number>(0);
 
   useEffect(() => {
     const onScroll = () => setNavScrolled(window.scrollY > 8);
@@ -121,7 +122,7 @@ export default function HomePage() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleFileSelect = (e) => {
+  const handleFileSelect = (e: any) => {
     const selected = e.target.files[0];
     if (!selected) return;
     const isSupported =
